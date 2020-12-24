@@ -2,10 +2,11 @@
 
 int main() {
   std::string targetNumber, secondNumber;
+  std::string tmp;
   int bulls = 0, cows = 0;
   bool flag = false;
 
-  while (flag == false){
+  while (!flag){
     std::cout << "Введите задуманное число: ";
     std::cin >> targetNumber;
     std::cout << "Введите второе число: ";
@@ -25,22 +26,37 @@ int main() {
       }
     }
   }
-  
-  for(int i = 0; i < targetNumber.length(); ++i){
-    for(int j = 0; j < secondNumber.length(); ++j){
-      if(secondNumber[j] == targetNumber[i]){
-        if (i == j){
-          bulls++;
-          i++;
-        }
-        else{
-          cows++;
-        }
+  if(targetNumber == secondNumber){
+    bulls = 4;
+  }
+  else{
+    for (int i = 0; i < targetNumber.length(); ++i){   
+      if (targetNumber[i] == secondNumber[i]){          
+        tmp[i] = 'C';                                   
+        ++bulls;                                        
+      } 
+      else{
+        tmp[i] = '0';                                  
       }
     }
-  }
 
-  std::cout << "Быков: " << bulls << ", коров: " << cows << std::endl;
+    for (int i = 0; i < targetNumber.length(); ++i){   
+      if (tmp[i] == 'C'){                              
+        continue;
+      }
+      for (int j = 0; j < targetNumber.length(); ++j){
+        if (tmp[j] == 'C' || tmp[j] == 'B'){           
+          continue;                                    
+        }
+        if (targetNumber[i] == secondNumber[j]){
+          tmp[j] = 'B';                                     
+          ++cows;                                      
+          break;                       
+        }                                    
+      }        
+    } 
+  }
+  std::cout << "\nБыков: " << bulls << ", коров: " << cows << std::endl;
 }
 
 /*
